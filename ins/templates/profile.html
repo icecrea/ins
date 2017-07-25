@@ -12,10 +12,21 @@
                 <div class="profile-info-main" data-reactid=".0.1.0.0:0.1.0">
                     <h1 class="name" title="taylorswift">{{user.username}}</h1>
                     <span class="verified" title="已验证">已验证</span>
+                    <!--<form action="/upload/" method="post" enctype="multipart/form-data">-->
+                    <!--<span class="_jxp6f _e616g">-->
+                        <!--&lt;!&ndash;<button class="btn-success" >上传图片</button>&ndash;&gt;-->
+                        <!--<input type="file" name="file" class="btn-success" value="上传图片" />-->
+
+                    <!--</span>-->
+                    <!--&lt;!&ndash;<button class="more-info">选项</button>&ndash;&gt;-->
+                         <!--<input type="submit" class="more-info" value="选项" />-->
+                    <!--</form>-->
+
                     <span class="_jxp6f _e616g">
-                        <button class="btn-success" >上传图片</button>
+                        <input type="file" id="file"/>
                     </span>
-                    <button class="more-info">选项</button>
+                    <button class="more-info" id="upload">选项</button>
+
                 </div>
                 <!--
                 <div class="profile-info-sub">
@@ -69,4 +80,5 @@
 </script>
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/profile.js"></script>
+<script type="text/javascript" src="/static/js/profileupload.js"></script>
 {% endblock%}
