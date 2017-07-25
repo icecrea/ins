@@ -5,6 +5,7 @@ from ins.models import Image,User,Comment
 from flask import render_template,redirect,request,flash,get_flashed_messages,send_from_directory
 import random,json,hashlib,uuid,os
 from flask_login import login_user,logout_user,current_user,login_required
+from ins.qiniusdk import qiniu_upload_file
 
 @app.route('/')
 def index():
@@ -124,12 +125,13 @@ def view_image(image_name):
 @app.route('/upload/',methods={'post'})
 def upload():
     file=request.files['file']
+    file_ext=''
     if file.filename.find('.') > 0:
         file_ext=file.filename.rsplit('.',1)[1].strip().lower()
-    #print(app.config['ALLOWED_EXT'])
     if file_ext in app.config['ALLOWED_EXT']:
         file_name=str(uuid.uuid1()).replace('-','')+'.'+file_ext
-        url=save_to_local(file,file_name)
+        #url=save_to_local(file,file_name)
+        url=qiniu_upload_file(file,file_name)
         if url!=None:
             db.session.add(Image(url,current_user.id))
             db.session.commit()
