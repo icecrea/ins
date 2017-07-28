@@ -1,7 +1,9 @@
 # -*- encoding=UTF-8 -*-
 
-from ins import app,db
+from ins import app, db, mail
 from ins.models import Image,User,Comment
+from flask_mail import Mail,Message
+from threading import Thread
 from flask import render_template,redirect,request,flash,get_flashed_messages,send_from_directory
 import random,json,hashlib,uuid,os
 from flask_login import login_user,logout_user,current_user,login_required
@@ -173,3 +175,17 @@ def index_image(page,per_page):
             images.append(imgvo)
 
     return ''
+
+
+def send_sync_email(app,msg):
+	with app.app_context():
+		mail.send(msg)
+
+
+@app.route('/sync/')
+def sendmailsync():
+	msg=Message('Hi',sender='798167096@qq.com',recipients=['icecrea@yeah.net'])
+	msg.html='<b>send this sync</b>'
+	thr=Thread(target=send_sync_email,args=[app,msg])
+	thr.start()
+	return app.config['MAIL_USERNAME']
